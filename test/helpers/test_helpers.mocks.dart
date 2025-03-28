@@ -9,6 +9,7 @@ import 'dart:ui' as _i6;
 import 'package:flutter/material.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i3;
+import 'package:my_first_app/services/authentication_service.dart' as _i7;
 import 'package:stacked_services/stacked_services.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -682,4 +683,20 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [AuthenticationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthenticationService extends _i1.Mock
+    implements _i7.AuthenticationService {
+  @override
+  bool userLoggedin() => (super.noSuchMethod(
+        Invocation.method(
+          #userLoggedin,
+          [],
+        ),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
 }

@@ -9,7 +9,8 @@ import 'package:stacked_services/stacked_services.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
-  const HomeView({Key? key}) : super(key: key);
+  final int startingIndex;
+  const HomeView({Key? key, required this.startingIndex}) : super(key: key);
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -26,7 +27,6 @@ class HomeView extends StackedView<HomeViewModel> {
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     final _navigationService = locator<NavigationService>();
-    int _selectedIndex = 0;
 
     return Scaffold(
       body: SafeArea(
@@ -48,25 +48,31 @@ class HomeView extends StackedView<HomeViewModel> {
                       ),
                     ),
                     verticalSpaceMedium,
+                    // _authButton(HomeViewModel()),
+                    ElevatedButton(
+                      onPressed: viewModel.authAction,
+                      child: const Text('Try Biometric Authentication'),
+                    ),
                     MaterialButton(
                       color: Colors.black,
                       onPressed: () {
                         _navigationService.replaceWith(Routes.profileView);
                       },
-                      child: Text(
+                      child: const Text(
                         "Profile",
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     verticalSpaceMedium,
-                    MaterialButton(
-                      color: Colors.black,
-                      onPressed: viewModel.incrementCounter,
-                      child: Text(
-                        viewModel.counterLabel,
-                        style: const TextStyle(color: Colors.white),
+                    if (viewModel.isAuthenticated)
+                      MaterialButton(
+                        color: Colors.black,
+                        onPressed: viewModel.incrementCounter,
+                        child: Text(
+                          viewModel.counterLabel,
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
                   ],
                 ),
                 Row(
@@ -106,6 +112,15 @@ class HomeView extends StackedView<HomeViewModel> {
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
+    );
+  }
+
+  _authButton(HomeViewModel viewModel) {
+    return ElevatedButton(
+      onPressed: () {
+        viewModel.authAction;
+      },
+      child: const Text('Try Biometric Authentication'),
     );
   }
 

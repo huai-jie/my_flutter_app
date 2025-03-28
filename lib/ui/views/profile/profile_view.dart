@@ -21,7 +21,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
     // }
   }
 
-@override
+  @override
   Widget builder(
     BuildContext context,
     ProfileViewModel viewModel,
